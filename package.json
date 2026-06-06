@@ -9,6 +9,7 @@
   "files": ["dist"],
   "scripts": {
     "scan": "bun src/cli.ts",
+    "start": "bun src/server.ts",
     "build": "tsc",
     "test": "bun test src/",
     "typecheck": "tsc --noEmit"
