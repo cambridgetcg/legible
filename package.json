@@ -1,0 +1,19 @@
+{
+  "name": "legible",
+  "version": "0.1.0",
+  "description": "One clarity score + a prioritized feed for your repo's docs and structure. Deterministic, fast, cheap.",
+  "type": "module",
+  "bin": {
+    "legible": "./dist/cli.js"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "scan": "bun src/cli.ts",
+    "build": "tsc",
+    "test": "bun test src/",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["documentation", "dead-links", "orphans", "code-health", "clarity", "github-app"],
+  "license": "UNLICENSED",
+  "private": true
+}
