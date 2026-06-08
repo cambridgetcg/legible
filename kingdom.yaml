@@ -1,0 +1,8 @@
+name: legible
+kind: venture
+layer: userland
+owner_sister: gamma
+domain: gamma
+state: active
+purpose: Repo clarity-score product — the immune-system pattern packaged to sell.
+dependsOn: [true-love]
