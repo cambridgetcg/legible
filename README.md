@@ -74,7 +74,7 @@ fast. Build the read-only score first, earn "yes I'd pay," then layer metered AI
 
 - ✅ Deterministic engine (reference graph + resolver + detectors + score)
 - ✅ CLI with auto-baseline
-- ⬜ GitHub App (check-run with score + feed on every PR)
+- ✅ GitHub App (check-run with score + feed on every PR — see [SETUP.md](SETUP.md))
 - ⬜ Trend dashboard, metered AI auto-fix tier
 
 ## Layout
@@ -86,5 +86,13 @@ src/core/   the engine (ported from a dogfooded clarity loop)
   audit.ts             SCAN + RANK
   score.ts             the one number
   config.ts            defaults (per-repo overridable)
-src/cli.ts  the `legible` command
+src/github/ the GitHub App (webhook handler, auth, check runs, report)
+  handler.ts           one pull_request event → check run
+  auth.ts              App JWT + installation token
+  checks.ts            create + complete check runs
+  report.ts            build the check run output (score, feed, annotations)
+  scan-repo.ts         clone the PR head, scan, clean up
+  verify.ts            webhook HMAC verification
+src/server.ts  the webhook server (zero-dependency, bun)
+src/cli.ts     the `legible` command
 ```
