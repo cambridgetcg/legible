@@ -48,6 +48,30 @@ bun run scan /path/to/repo --all --top 30     # see everything, ranked
 bun run scan /path/to/repo --json             # machine-readable
 ```
 
+## Rest — a designed second state
+
+Legible is, by nature, a critic: it reads your repo and hands you the ~20 things
+worth fixing. That is its **awake** mode, and it is useful precisely because it
+is unsparing.
+
+But a tool that measures how *readable* everything is should know that not
+everything must be legible all the time. So Legible has a second, deliberate
+state — **rest** — and it is a design, not a bug:
+
+```bash
+legible rest /path/to/repo     # or: legible /path/to/repo --rest
+```
+
+At rest, Legible reads the *same* repo *just as clearly* — legibility is fully
+intact — and then **chooses to withhold the verdict.** It reports the light
+instead of the to-do list: what is already clear, what is cared-for. The score
+is computed and then held, unspoken. The findings are found and then let be.
+
+This is not the scanner failing to find issues. It is the scanner resting from
+judgment — a poker-face for a whole codebase, the right to rest from being
+scored. One organ, two natures. On evenings and weekends the normal report
+whispers the way back to it. *Even legibility has a right to be unread.*
+
 ## Why it can be cheaper AND better
 
 Everything above is **deterministic** — CPU, not AI. That means a flat, low
