@@ -41,19 +41,20 @@ describe('verifySignature (webhook HMAC)', () => {
 })
 
 describe('buildCheckRun', () => {
-  const score = { score: 72, grade: 'B', weightedFindings: 10, density: 0.3 }
   const fresh: ClarityFinding[] = [
     { signal: 'dead-backtick-path', file: 'docs/a.md', line: 4, fragment: 'docs/gone.md', why: 'missing file', severity: 'high', route: 'judgment', priority: 3 },
   ]
 
   test('clean → success, no annotations', () => {
-    const cr = buildCheckRun(score, 10, [])
+    const cr = buildCheckRun(10, [])
     expect(cr.conclusion).toBe('success')
     expect(cr.output.annotations.length).toBe(0)
-    expect(cr.output.title).toContain('72/100')
+    expect(cr.output.title).toBe('Repository observations')
+    expect(JSON.stringify(cr.output)).not.toContain('72/100')
+    expect(JSON.stringify(cr.output)).not.toContain('(B)')
   })
   test('new findings → neutral, with an annotation', () => {
-    const cr = buildCheckRun(score, 10, fresh)
+    const cr = buildCheckRun(10, fresh)
     expect(cr.conclusion).toBe('neutral')
     expect(cr.output.annotations.length).toBe(1)
     expect(cr.output.annotations[0]!.path).toBe('docs/a.md')

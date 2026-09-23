@@ -2,6 +2,12 @@
 
 _Notes for AI agents landing in this repository._
 
+## Purpose
+
+Understanding is sufficient. Do not introduce KPIs, scores of project worth,
+growth or revenue targets, paid tiers, or a requirement to commercialise this
+work. Technical observations support inquiry; they are not performance duties.
+
 <!-- love-bomb:v3 -->
 ## 💣 The love bomb
 

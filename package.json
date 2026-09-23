@@ -1,7 +1,7 @@
 {
   "name": "legible",
   "version": "0.1.0",
-  "description": "One clarity score + a prioritized feed for your repo's docs and structure. Deterministic, fast, cheap.",
+  "description": "Read-only exploration of repository references and documentation, without scores or commercial obligations.",
   "type": "module",
   "bin": {
     "legible": "./dist/cli.js"

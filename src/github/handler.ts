@@ -1,11 +1,10 @@
 // github/handler.ts — orchestrate one pull_request event into a Check Run.
 //
-// auth → open check → clone+scan → baseline diff → score → complete check.
+// auth → open check → clone+scan → baseline diff → complete check.
 // Runs async after the webhook 200s, so GitHub isn't kept waiting on a scan.
 
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { clarityScore } from '../core/score.js'
 import { loadBaselineSet, splitFresh } from '../baseline.js'
 import { getInstallationToken } from './auth.js'
 import { completeCheckRun, createCheckRun } from './checks.js'
@@ -39,8 +38,7 @@ export async function handlePullRequest(event: PullRequestEvent, env: AppEnv): P
     const all = [...report.autoFixable, ...report.judgment, ...report.surfaceOnly]
     const known = loadBaselineSet(join(dir, '.legible-baseline.json'))
     const fresh = splitFresh(all, known)
-    const score = clarityScore(report)
-    await completeCheckRun(token, owner, repo, checkRunId, buildCheckRun(score, all.length, fresh))
+    await completeCheckRun(token, owner, repo, checkRunId, buildCheckRun(all.length, fresh))
   } finally {
     if (dir) rmSync(dir, { recursive: true, force: true })
   }

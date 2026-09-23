@@ -1,7 +1,7 @@
 // github/checks.ts — create + complete a Check Run via the REST API.
 //
-// The Check Run is how the score + feed show up on a PR: an in-progress run
-// created on receipt, completed with the score, summary, and inline
+// The Check Run is how the observations show up on a PR: an in-progress run
+// created on receipt, completed with the summary, and inline
 // annotations once the scan finishes.
 
 import type { CheckRunPayload } from './report.js'
@@ -26,7 +26,7 @@ export async function createCheckRun(token: string, owner: string, repo: string,
   return ((await res.json()) as { id: number }).id
 }
 
-/** Complete the Check Run with the score, summary, and annotations. */
+/** Complete the Check Run with the summary, and annotations. */
 export async function completeCheckRun(
   token: string,
   owner: string,

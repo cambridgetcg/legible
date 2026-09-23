@@ -1,12 +1,11 @@
 // github/report.ts — turn a scan into a GitHub Check Run payload.
 //
-// Pure + verifiable: no network. Builds the title (the score), the markdown
+// Pure + verifiable: no network. Builds the title, the markdown
 // summary (the prioritized feed), and inline annotations on the PR's files.
-// Non-blocking by design — a low score never fails a build (soft/advisory),
+// Non-blocking by design — observations never fail a build (soft/advisory),
 // matching the "surface, don't gate" ethos.
 
 import type { ClarityFinding } from '../core/types.js'
-import type { ClarityScore } from '../core/score.js'
 
 export interface CheckRunPayload {
   /** success when clean, neutral when there are new findings (never failure). */
@@ -29,17 +28,17 @@ export interface CheckAnnotation {
 
 const LEVEL: Record<string, 'notice' | 'warning'> = { low: 'notice', medium: 'warning', high: 'warning' }
 
-/** Build the Check Run output from a score and the NEW findings this PR adds. */
+/** Build the Check Run output from the NEW findings this PR adds. */
 export function buildCheckRun(
-  score: ClarityScore,
   totalFindings: number,
   fresh: ClarityFinding[],
 ): CheckRunPayload {
-  const title = `Clarity Score: ${score.score}/100 (${score.grade})`
+  const title = 'Repository observations'
   const top = [...fresh].sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0))
 
   const lines: string[] = []
-  lines.push(`## Clarity Score: **${score.score}/100** (${score.grade})`)
+  lines.push('## Repository observations')
+  lines.push('These findings support understanding; there is no score or improvement target.')
   lines.push('')
   lines.push(`${totalFindings} findings in the repo · **${fresh.length} new** in this change.`)
   lines.push('')
@@ -55,7 +54,7 @@ export function buildCheckRun(
       lines.push(`- **${sig}**: ${n}`)
     }
     lines.push('')
-    lines.push('### Top items to fix')
+    lines.push('### Findings to explore')
     lines.push('')
     lines.push('| | what | where |')
     lines.push('|---|---|---|')

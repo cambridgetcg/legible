@@ -1,6 +1,6 @@
 # Legible GitHub App — setup
 
-The App posts a **Clarity Score + a feed of new findings** as a check on every
+The App posts **read-only findings, without a score or grade,** as a check on every
 pull request. Zero dependencies — runs on `bun`. ~15 minutes to first check.
 
 ## 1. Register the App
@@ -13,7 +13,7 @@ GitHub → **Settings → Developer settings → GitHub Apps → New GitHub App*
 - **Webhook URL:** your server's public URL (see step 3 for local dev)
 - **Webhook secret:** a long random string → put the same value in `.env` as `WEBHOOK_SECRET`
 - **Repository permissions:**
-  - **Checks:** Read & write  ← posts the score
+  - **Checks:** Read & write  ← posts observations
   - **Contents:** Read-only   ← clones the repo to scan
   - **Pull requests:** Read-only
   - **Metadata:** Read-only (auto)
@@ -49,11 +49,11 @@ HTTPS URL (Fly.io, Railway, a small VPS) and point the Webhook URL there.
 ## 4. Install it on a repo
 
 App settings → **Install App** → pick a repo. Open a PR → a **"Legible — clarity"**
-check appears with the score, a summary feed, and inline annotations.
+check appears with a summary feed and inline annotations.
 
 ## How it behaves
 
-- **Non-blocking.** A low score never fails the build — it's advisory
+- **Non-blocking.** Findings never fail the build — they are advisory
   (`success` when clean, `neutral` when there are new findings).
 - **Auto-baseline.** Commit a `.legible-baseline.json` (run
   `bun run scan . --init-baseline` locally and commit the file) so the check
@@ -61,8 +61,8 @@ check appears with the score, a summary feed, and inline annotations.
 - **Cheap.** The scan is deterministic (CPU, no LLM), so it's effectively free
   to run on every PR.
 
-## What's next (not built yet)
+## Optional exploration
 
-- Metered AI auto-fix tier (open a fix PR — priced per use, never flat).
-- A trend dashboard (score over time, org-wide).
-- Read the git tree via the API to skip the clone at scale.
+Reading a Git tree through the API could avoid a local clone. This is an
+open question, not a delivery obligation. Paid tiers and score dashboards
+are retired; the project does not need a business case.
